@@ -30,6 +30,7 @@ cron_setup_user();
 // Auswerten der CMD-Argumente
 
 $cb = new CategoryBackup();
+$cb->cron();
 
 /*
 Cleaner::log("Cleaner CLI gestartet\n");
