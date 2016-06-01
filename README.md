@@ -1,4 +1,4 @@
-# moodle-tool_categorybackup
+# moodle-local_categorybackup
 Create backups for specified course categories only (not for all courses)
 
 ## Installation
