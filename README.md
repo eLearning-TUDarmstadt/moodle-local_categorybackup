@@ -12,9 +12,5 @@ The configuration page is located at:
 *Site administration / Plugins / Local plugins / Course categories for backup*
 
 There you will find two configuration options:
-1. *Active*
-
-If set, backups will be created for courses in selected categories **only**!
-2. *Course categories*
-
-Select the course categories you wish to backup here. Backups will be created for sub-categories within, too. 
+1. **Active** - If set, backups will be created for courses in selected categories **only**!
+2. **Course categories** - Select the course categories you wish to backup here. Backups will be created for sub-categories within, too.
