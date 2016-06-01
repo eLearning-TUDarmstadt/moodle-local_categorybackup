@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,15 +16,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details.
+ * Capabilities
+ *
+ * Defines capablities related to logs
  *
  * @package    local_categorybackup
- * @copyright  2016 Steffen Pegenau
+ * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
-defined('MOODLE_INTERNAL') || die;
-
-$plugin->version  = 2016052301;
-$plugin->requires = 2010112400;
-$plugin->component = 'local_categorybackup';
+$capabilities = array(
+    'local/categorybackup:view' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW,
+            'coursecreator' => CAP_ALLOW
+        ),
+        'clonepermissionsfrom' => 'moodle/site:config',
+        'clonepermissionsfrom' => 'coursereport/log:view',
+    ),
+);
