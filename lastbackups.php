@@ -64,10 +64,10 @@ $results = $DB->get_records_sql($sql);
 // Row Names
 $term = "Semester";
 $department = "FB";
-$courseId = "#";
+$courseId = "Kurs ID";
 $fullname = "Kurs";
-$created = "Erstellt";
-$size = "Groesse";
+$created = "Backup erstellt";
+$size = "Backup Groesse";
 
 $table = new html_table();
 $table->attributes = array("class" => "table table-striped table-bordered table-hover table-condensed table-responsive");
@@ -112,6 +112,7 @@ foreach ($category_ids as $id) {
 $output .= "</ul>";
 
 // Now the table
+$output .= "<h4>Bereits erstellte Backups (aus Tabelle <i>files</i> ermittelt):</h4>";
 $output .= html_writer::table($table);
 $output .= "</div></body></html>";
 echo $output;
