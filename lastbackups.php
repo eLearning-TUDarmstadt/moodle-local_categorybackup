@@ -103,36 +103,38 @@ $courseId = "Kurs ID";
 $fullname = "Kurs";
 $created = "Backup erstellt";
 $size = "Backup Groesse";
-$unwanted = "Ungewollt";
+$wanted = "Ungewollt";
 
 $table = new html_table();
 $table->attributes = array("class" => "table table-striped table-bordered table-hover table-condensed table-responsive");
-$table->head = array($courseId, $term, $department, $fullname, $created, $size, $unwanted);
+$table->head = array($courseId, $term, $department, $fullname, $created, $size, $wanted);
 
-function isWantedBackup($semester, $fb) {
+function isUnwantedBackup($catnames, $semester, $fb) {
 	foreach ($catnames as $name) {
-		if($semester === $name || $fb === $name) {
-			return true;
+		if($semester == $name || $fb == $name) {
+			return "";
 		}
 	}
-	return $false;
+	return "=JA=";
 }
 
 $date_format = "d.m.Y H:i:s";
+$totalsize = 0;
 foreach ($results as $fileid => $f) {
+	$totalsize += $f->filesize;
     $size = formatBytes($f->filesize);
     $created = date($date_format, $f->timecreated);
     $modified = date($date_format, $f->timemodified);
     
-    $unwanted = !isWantedBackup($f->semester, $f->fb) ? "!!!JA!!!" : "";
-    $table->data[] = array($f->course, $f->semester, $f->fb,  $f->fullname, $created, $size);
+    $unwanted = isUnwantedBackup($catnames, $f->semester, $f->fb);
+    $table->data[] = array($f->course, $f->semester, $f->fb,  $f->fullname, $created, $size, $unwanted);
 }
 
 
 
 
 // Now the table
-$output .= "<h4>Bereits erstellte Backups (aus Tabelle <i>files</i> ermittelt):</h4>";
+$output .= "<h4>Bereits erstellte Backups (aus Tabelle <i>files</i> ermittelt, Gesamtgroesse: " .formatBytes($totalsize). "):</h4>";
 $output .= html_writer::table($table);
 $output .= "</div></body></html>";
 echo $output;
