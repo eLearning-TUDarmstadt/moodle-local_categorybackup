@@ -124,8 +124,7 @@ foreach ($results as $fileid => $f) {
 	$totalsize += $f->filesize;
     $size = formatBytes($f->filesize);
     $created = date($date_format, $f->timecreated);
-    $modified = date($date_format, $f->timemodified);
-    
+        
     $unwanted = isUnwantedBackup($catnames, $f->semester, $f->fb);
     $table->data[] = array($f->course, $f->semester, $f->fb,  $f->fullname, $created, $size, $unwanted);
 }
