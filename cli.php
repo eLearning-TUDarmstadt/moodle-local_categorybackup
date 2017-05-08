@@ -16,7 +16,7 @@ use CategoryBackup;
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 define('CLI_SCRIPT', 1);
-require_once '../../config.php';
+require_once dirname(__FILE__).'/../../config.php';
 require_once $CFG->dirroot . '/local/categorybackup/lib.php';
 
 require_once($CFG->libdir.'/clilib.php');      // cli only functions
