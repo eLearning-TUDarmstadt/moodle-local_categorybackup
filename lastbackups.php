@@ -39,6 +39,15 @@ $output = "<html><head>";
 // Bootstrap
 $output .= '
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(window).ready(function() {
+	$("#menuSemester").change(function() {
+		window.location.href = "?categories=" + $(this).val().join(",");
+	});
+});
+
+</script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -46,11 +55,20 @@ $output .= '
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>';
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<style>
+	#menuSemester {
+		height:250px;
+		margin-bottom: 20px;
+	}
+</style>
+';
 
 $output .= "</head><body><div class='container'>";
 
 $category_ids = explode(',', $CFG->local_categorybackup_categories);
+
+$categories = empty($_GET['categories']) ? $CFG->local_categorybackup_categories : $_GET['categories'];
 
 $output .= "<h4>Backups sollten fuer diese Kategorien erstellt werden:</h4>";
 $output .= "<ul>";
@@ -90,7 +108,8 @@ WHERE
 	c.id = f.contextid AND
 	c.contextlevel = 50 AND
 	co.id = c.instanceid AND
-	ccat.id = co.category
+	ccat.id = co.category AND
+	ccat.parent IN ($categories)
 ORDER BY 
 	f.timecreated DESC";
 
@@ -129,12 +148,20 @@ foreach ($results as $fileid => $f) {
     $table->data[] = array($f->course, $f->semester, $f->fb,  $f->fullname, $created, $size, $unwanted);
 }
 
+$semesterResult = $DB->get_records('course_categories', array('depth' => 1));
 
+$semesters = array_reduce($semesterResult, function($acc, $obj) {
+	$acc[$obj->id] = $obj->name;
+	return $acc;
+});
 
+$backupsCount = count($results);
 
 // Now the table
-$output .= "<h4>Bereits erstellte Backups (aus Tabelle <i>files</i> ermittelt, Gesamtgroesse: " .formatBytes($totalsize). "):</h4>";
+$output .= "<h4>Bereits erstellte Backups $backupsCount (aus Tabelle <i>files</i> ermittelt, Gesamtgroesse: " .formatBytes($totalsize). "):</h4>";
+$output .= html_writer::select($semesters, 'Semester', explode(',', $categories), $nothing = array('' => 'choosedots'), array('multiple' => 'multiple', 'class' => 'form-control'));
 $output .= html_writer::table($table);
-$output .= "</div></body></html>";
+$output .= "</div>";
+$output .= "</body></html>";
 echo $output;
 //echo "<pre>".print_r($results, true)."</pre>";
