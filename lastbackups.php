@@ -42,8 +42,9 @@ $output .= '
 <script type="text/javascript">
 
 $(window).ready(function() {
-	$("#menuSemester").change(function() {
-		window.location.href = "?categories=" + $(this).val().join(",");
+	$("#load").click(function() {
+		var categories = $("#menuSemester").val().join(",");
+		window.location.href = "?categories=" + categories;
 	});
 });
 
@@ -160,6 +161,8 @@ $backupsCount = count($results);
 // Now the table
 $output .= "<h4>Bereits erstellte Backups $backupsCount (aus Tabelle <i>files</i> ermittelt, Gesamtgroesse: " .formatBytes($totalsize). "):</h4>";
 $output .= html_writer::select($semesters, 'Semester', explode(',', $categories), $nothing = array('' => 'choosedots'), array('multiple' => 'multiple', 'class' => 'form-control'));
+$output .= '<div><button id="load" class="btn btn-primary">Backups anzeigen</button></div>';
+$output .= "<br><br>";
 $output .= html_writer::table($table);
 $output .= "</div>";
 $output .= "</body></html>";
