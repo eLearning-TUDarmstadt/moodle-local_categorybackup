@@ -48,12 +48,7 @@ class start_backup extends \core\task\scheduled_task {
         global $CFG;
         require_once $CFG->dirroot . '/local/categorybackup/lib.php';
 
-        require_once($CFG->libdir.'/clilib.php');
-        require_once($CFG->libdir.'/cronlib.php');
-        require_once($CFG->libdir.'/adminlib.php');
-        require_once($CFG->libdir.'/gradelib.php');
-
-        $cb = new CategoryBackup();
-        //$cb->cron();
+        $cb = new \CategoryBackup();
+        $cb->cron();
     }
 }

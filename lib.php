@@ -15,7 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-global $CFG;
+defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
+
 require_once($CFG->dirroot . '/backup/util/includes/backup_includes.php');
 
 class CategoryBackup {
@@ -29,9 +30,7 @@ class CategoryBackup {
     private $FAR_FUTURE = 2147483000;
 
     function __construct() {
-        require_once '../../config.php';
         global $CFG;
-
         // Get config data
         $this->active = $CFG->local_categorybackup_active;
         $this->categories = explode(',', $CFG->local_categorybackup_categories);
@@ -63,18 +62,13 @@ class CategoryBackup {
 
     /**
      * Collects recursivly all courses in the selected categories
-     * 
+     *
      * (The courses to backup)
-     * 
-     * @global type $CFG
      */
     private function collectCoursesInCategories() {
-        global $CFG;
-        require_once($CFG->dirroot . '/lib/coursecatlib.php');
-
         $courses = array();
         foreach ($this->categories as $id) {
-            $courses_tmp = coursecat::get($id, IGNORE_MISSING, true)->get_courses(array('recursive' => true));
+            $courses_tmp = \core_course_category::get($id, IGNORE_MISSING, true)->get_courses(array('recursive' => true));
             $courses = $courses + $courses_tmp;
         }
         $this->courses = $courses;
@@ -82,7 +76,7 @@ class CategoryBackup {
 
     /**
      * Deactivates the backup for all courses that are not in one of the selected categories
-     * 
+     *
      * Deactivation means: Setting the next date for backup to one in the far future
      */
     private function deactivateBackup() {
