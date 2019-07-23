@@ -37,6 +37,6 @@ if ($hassiteconfig) {
     foreach ($categories as $id => $category) {
         $choices[$category->id] = $id . " - " .$category->name;
     }
-    $settings->add(new admin_setting_configmultiselect('local_categorybackup_categories', get_string('categories'), 'Only courses in selected categories will be backed up', '', $choices));
+    $settings->add(new admin_setting_configmultiselect('local_categorybackup_categories', get_string('categories'), 'Only courses in selected categories will be backed up', array(), $choices));
 
 }
