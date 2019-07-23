@@ -7,3 +7,6 @@
  */
 $string['categoriesdescription'] = 'Enter comma separated list of the ids of the course categories to backup';
 $string['pluginname'] = 'Course categories for backup';
+
+// Task API.
+$string['task_name'] = 'Backup course categories';

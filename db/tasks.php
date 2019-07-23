@@ -13,17 +13,25 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * Version details.
+ * The main entry file of the plugin.
  *
- * @package    local_categorybackup
- * @copyright  2016 Steffen Pegenau
+ * Provide the site-wide setting and specific configuration for each assignment.
+ *
+ * @package    plagiarism_programming
+ * @copyright  2019 Benedikt Schneider (@Nullmann)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
-defined('MOODLE_INTERNAL') || die;
-
-$plugin->version  = 2019072302;
-$plugin->requires = 2010112400;
-$plugin->component = 'local_categorybackup';
+$tasks = [
+    [
+        'classname' => 'local_categorybackup\task\start_backup',
+        'blocking' => 0,
+        'minute' => '10', // Execute task every hour at 10 minutes after.
+        'hour' => '*',
+        'day' => '*',
+        'dayofweek' => '*',
+        'month' => '*'
+    ],
+];
