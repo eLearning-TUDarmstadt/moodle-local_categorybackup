@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
  * Class send_submissions
  * @package local_categorybackup\task
  */
-class start_backup extends \core\task\scheduled_task {
+class set_backup_times extends \core\task\scheduled_task {
 
     /**
      * Get a descriptive name for this task (shown to admins).

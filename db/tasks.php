@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
 $tasks = [
     [
-        'classname' => 'local_categorybackup\task\start_backup',
+        'classname' => 'local_categorybackup\task\set_backup_times',
         'blocking' => 0,
         'minute' => '10', // Execute task every hour at 10 minutes after.
         'hour' => '*',

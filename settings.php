@@ -37,11 +37,18 @@ if ($hassiteconfig) {
     foreach ($categories as $id => $category) {
         $choices[$category->id] = $id . " - " .$category->name;
     }
-    $settings->add(new admin_setting_configmultiselect('local_categorybackup_categories', get_string('categories'), 'Only courses in selected categories will be backed up', array(), $choices));
+    $settings->add(new admin_setting_configmultiselect('local_categorybackup_categories', get_string('categories'),
+        get_string('cat_selection_desc', 'local_categorybackup'), array(), $choices));
 
     // Show link to last backups.
-    $moodle_url = html_writer::link(new moodle_url('/local/categorybackup/lastbackups.php', array()),get_string('clickhere'));
-    $settings->add(new admin_setting_description('local_categorybackup_link',
+    $moodle_url = html_writer::link(new moodle_url('/local/categorybackup/lastbackups.php', array()), get_string('clickhere'));
+    $settings->add(new admin_setting_description('local_categorybackup_linktobackups',
         get_string('last_backups_link', 'local_categorybackup'), $moodle_url));
 
+    echo "\n";
+
+    // Show link to automated backups.
+    $moodle_url = html_writer::link(new moodle_url('/admin/settings.php?section=automated', array()), get_string('clickhere'));
+    $settings->add(new admin_setting_description('local_categorybackup_linktoautobackups',
+        get_string('auto_backup_desc', 'local_categorybackup'), $moodle_url));
 }

@@ -7,7 +7,11 @@
  */
 $string['categoriesdescription'] = 'Enter comma separated list of the ids of the course categories to backup';
 $string['pluginname'] = 'Course categories for backup';
-$string['last_backups_link'] = 'Link to last backups';
+
+// Settings.
+$string['last_backups_link'] = 'Link to last backups: ';
+$string['cat_selection_desc'] = 'Only courses in selected categories will be backed up';
+$string['auto_backup_desc'] = 'Automated Backups need to be activated here:';
 
 // Task API.
 $string['task_name'] = 'Backup course categories';

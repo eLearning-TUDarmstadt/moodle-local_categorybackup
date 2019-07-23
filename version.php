@@ -24,6 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version  = 2019072302;
+$plugin->version  = 2019072303;
 $plugin->requires = 2010112400;
 $plugin->component = 'local_categorybackup';
