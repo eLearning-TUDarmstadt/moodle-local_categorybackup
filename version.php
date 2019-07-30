@@ -25,5 +25,5 @@
 defined('MOODLE_INTERNAL') || die;
 
 $plugin->version  = 2019072303;
-$plugin->requires = 2010112400;
+$plugin->requires = 2018120100.00; // Moodle Version 3.6 for core_course_category
 $plugin->component = 'local_categorybackup';
