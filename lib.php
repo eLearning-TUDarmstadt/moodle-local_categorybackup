@@ -67,6 +67,7 @@ class CategoryBackup {
      * (Returns the courses to backup in class variable)
      */
     private function collectCoursesInCategories() {
+        global $CFG;
         require_once($CFG->dirroot . '/lib/coursecatlib.php');
         $courses = array();
         foreach ($this->categories as $id) {
