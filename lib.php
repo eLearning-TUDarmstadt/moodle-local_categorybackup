@@ -67,9 +67,10 @@ class CategoryBackup {
      * (Returns the courses to backup in class variable)
      */
     private function collectCoursesInCategories() {
+        require_once($CFG->dirroot . '/lib/coursecatlib.php');
         $courses = array();
         foreach ($this->categories as $id) {
-            $courses_tmp = \core_course_category::get($id, IGNORE_MISSING, true)->get_courses(array('recursive' => true));
+            $courses_tmp = coursecat::get($id, IGNORE_MISSING, true)->get_courses(array('recursive' => true));
             $courses = $courses + $courses_tmp;
         }
         $this->courses = $courses;

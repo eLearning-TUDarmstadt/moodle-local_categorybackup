@@ -74,9 +74,10 @@ $categories = empty($_GET['categories']) ? $CFG->local_categorybackup_categories
 $output .= "<h4>Backups sollten fuer diese Kategorien erstellt werden:</h4>";
 $output .= "<ul>";
 
+require_once($CFG->dirroot . '/lib/coursecatlib.php');
 $catnames = [];
 foreach ($category_ids as $id) {
-	$cat = \core_course_category::get($id);
+	$cat = coursecat::get($id);
 	$catnames[] = $cat->name;
 	$output .= "<li>" . $cat->name . "</li>";
 }
