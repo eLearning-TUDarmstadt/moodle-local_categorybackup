@@ -19,7 +19,7 @@
 function formatBytes($size, $precision = 2)
 {
     $base = log($size, 1024);
-    $suffixes = array('', 'K', 'M', 'G', 'T');   
+    $suffixes = array('', 'K', 'M', 'G', 'T');
 
     return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
 }
@@ -73,11 +73,10 @@ $categories = empty($_GET['categories']) ? $CFG->local_categorybackup_categories
 
 $output .= "<h4>Backups sollten fuer diese Kategorien erstellt werden:</h4>";
 $output .= "<ul>";
-require_once($CFG->dirroot . '/lib/coursecatlib.php');
 
 $catnames = [];
 foreach ($category_ids as $id) {
-	$cat = coursecat::get($id);
+	$cat = \core_course_category::get($id);
 	$catnames[] = $cat->name;
 	$output .= "<li>" . $cat->name . "</li>";
 }
@@ -87,31 +86,31 @@ $output .= "</ul>";
 
 require_once $CFG->libdir . '/outputcomponents.php';
 
-$sql = "SELECT 
+$sql = "SELECT
 	f.id as fileid,
-	f.filearea, 
-	f.filename, 
-	f.filesize, 
+	f.filearea,
+	f.filename,
+	f.filesize,
 	f.timecreated,
 	co.id as course,
 	co.fullname,
 	co.shortname,
 	ccat.name as fb,
 	(SELECT cat.name FROM {course_categories} cat WHERE cat.id = ccat.parent) as semester
-FROM 
+FROM
 	{files} f,
 	{context} c,
 	{course} co,
 	{course_categories} ccat
-WHERE 
-	f.filesize != 0 AND 
+WHERE
+	f.filesize != 0 AND
 	f.component = 'backup' AND
 	c.id = f.contextid AND
 	c.contextlevel = 50 AND
 	co.id = c.instanceid AND
 	ccat.id = co.category AND
 	ccat.parent IN ($categories)
-ORDER BY 
+ORDER BY
 	f.timecreated DESC";
 
 $results = $DB->get_records_sql($sql);
@@ -144,7 +143,7 @@ foreach ($results as $fileid => $f) {
 	$totalsize += $f->filesize;
     $size = formatBytes($f->filesize);
     $created = date($date_format, $f->timecreated);
-        
+
     $unwanted = isUnwantedBackup($catnames, $f->semester, $f->fb);
     $table->data[] = array($f->course, $f->semester, $f->fb,  $f->fullname, $created, $size, $unwanted);
 }
