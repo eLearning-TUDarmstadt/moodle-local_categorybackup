@@ -1,6 +1,10 @@
 # moodle-local_categorybackup
 Changes the automatic backup process to only create backups for specified course categories only (not for all courses).
 
+## Prerequisites
+* This version is tested on Moodle 3.6. 3.7, 3.8, 3.9, 3.10, 3.11 
+* For Moodle 3.5 and older use branch MOODLE_35_STABLE
+
 ## Installation
 1. Put the files to the folder /local/categorybackup in your Moodle directory.
 2. Visit the administration page of your Moodle site and finish the installation progress.
